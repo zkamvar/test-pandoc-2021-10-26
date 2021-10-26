@@ -46,6 +46,6 @@ flatten_links = function(el)
 end
 
 return {
-  {Link  = flatten_links},
   {Image = flatten_links},
+  {Link  = flatten_links},
 }
