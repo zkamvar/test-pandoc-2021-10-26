@@ -49,13 +49,13 @@ jobs:
         run: |
           pandoc ex.md\
             --to html4\
-            --from markdown+autolink_bare_uris+markdown_in_html_blocks\
+            --from markdown\
 
       - name: "Test simple filter"
         run: |
           pandoc ex.md\
             --to html4\
-            --from markdown+autolink_bare_uris+markdown_in_html_blocks\
+            --from markdown\
             --lua-filter filter.lua\
             ex.md
 
