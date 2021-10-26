@@ -61,6 +61,15 @@ jobs:
             ex.md
         shell: bash
 
+      - name: "Test sausage"
+        run: |
+          pandoc ex.md\
+            --to html4\
+            --from markdown\
+            --lua-filter falter.lua\
+            ex.md
+        shell: bash
+
       - name: "Test like rmarkdown"
         run: |
           pandoc ex.md\
