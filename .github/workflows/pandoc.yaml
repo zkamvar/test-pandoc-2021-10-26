@@ -50,6 +50,7 @@ jobs:
           pandoc ex.md\
             --to html4\
             --from markdown\
+        shell: bash
 
       - name: "Test simple filter"
         run: |
@@ -58,6 +59,7 @@ jobs:
             --from markdown\
             --lua-filter filter.lua\
             ex.md
+        shell: bash
 
       - name: "Test like rmarkdown"
         run: |
@@ -67,5 +69,6 @@ jobs:
            --indented-code-classes=sh\
            --section-divs\
            --mathjax\
-           --lua-filter filter.lua\
+           --lua-filter filter.lua
+        shell: bash
 
