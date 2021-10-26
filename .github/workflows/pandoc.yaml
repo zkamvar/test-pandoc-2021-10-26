@@ -1,0 +1,58 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+name: R-CMD-check
+
+jobs:
+  sup-doc:
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    runs-on: ${{ matrix.config.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macOS-11,   r: 'release', cache: '~/Library/Application Support/renv', cov: 'true'}
+          - {os: windows-latest, r: 'release', cache: '~\AppData\Local\renv
+'}
+          - {os: ubuntu-18.04,   r: 'devel', cache: '~/.local/share/renv', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest", http-user-agent: "R/4.0.0 (ubuntu-18.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      RENV_PATHS_ROOT: ${{ matrix.config.cache }}
+
+    steps:
+      - name: Record Linux Version
+        if: runner.os == 'Linux'
+        run: echo "OS_VERSION=`lsb_release -sr`" >> $GITHUB_ENV
+      
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: "Change windows temp dir"
+        if: runner.os == 'Windows'
+        run: echo "TMPDIR=${{ runner.temp }}" >> $GITHUB_ENV
+        shell: bash
+
+      - name: "Setup Devel Pandoc"
+        uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
+
+      - name: "Test output"
+        run: |
+          pandoc \
+          +RTS -K512m -RTS ex.md\
+           --to html4\
+           --from markdown-hard_line_breaks+smart+auto_identifiers+autolink_bare_uris+emoji+footnotes+inline_notes+tex_math_dollars+tex_math_single_backslash+markdown_in_html_blocks+yaml_metadata_block+header_attributes+native_divs\
+           --indented-code-classes=sh\
+           --section-divs\
+           --mathjax\
+           --lua-filter filter.lua
+
