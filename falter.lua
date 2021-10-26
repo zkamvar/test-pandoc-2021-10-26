@@ -13,5 +13,6 @@ sausage_links = function(el)
 end
 
 return {
+  {Image = sausage_links},
   {Link  = sausage_links},
 }
