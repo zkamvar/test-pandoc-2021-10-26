@@ -46,13 +46,13 @@ jobs:
         uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
 
       - name: "Test no filter"
-        run: 
+        run: |
           pandoc ex.md\
             --to html4\
             --from markdown+autolink_bare_uris+markdown_in_html_blocks\
 
       - name: "Test simple filter"
-        run: 
+        run: |
           pandoc ex.md\
             --to html4\
             --from markdown+autolink_bare_uris+markdown_in_html_blocks\
