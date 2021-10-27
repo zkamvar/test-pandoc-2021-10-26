@@ -4,11 +4,11 @@ local text = require('text')
 sausage_links = function(el)
   local tgt;
   tgt = 'https://oregonpeppertree.com/'
-  if el.target != nil then
+  if el.target ~= nil then
     el.target = tgt;
-  elseif el.src != nil then
+  elseif el.src ~= nil then
     el.src = tgt;
-  elseif el.href != nil then
+  elseif el.href ~= nil then
     el.href = tgt;
   else
   end
