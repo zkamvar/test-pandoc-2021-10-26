@@ -1,5 +1,7 @@
 # Testing Pandoc Issue
 
+**update**: I opened an issue here that may have triggered the fix: https://github.com/jgm/pandoc/issues/7639
+
 I've noticed some errors pop up with the latest pandoc in combination with one
 of my lua filters that modifies links to flatten them and replace source 
 extensions with output extensions.
